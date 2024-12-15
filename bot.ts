@@ -18,8 +18,11 @@ bot.on("message", async (ctx) => {
   }
 
   const parts = ctx.message?.text?.split(" ");
-  if (parts.length < 2) {
-    return ctx.reply("Address parameter is missing.");
+  if (parts.length === 1) { 
+    return ctx.reply("Missing address.");
+  }
+  if (parts.length !== 2) {
+    return ctx.reply("Invalid command.");
   }
 
   const network = parts[0].trim();
