@@ -9,20 +9,36 @@ bot.command("start", (ctx) =>
   )
 );
 
-bot.on("message", (ctx) => {
-  ctx.reply("Echo: " + ctx.message?.text)
-  
-  if (ctx.message?.text?.startsWith("devnet")) {
-    ctx.reply("Devnet faucet is not available yet.");
-    return;
+bot.on("message", async (ctx) => {
+  if (
+    !ctx.message?.text?.startsWith("devnet") ||
+    !ctx.message?.text?.startsWith("testnet")
+  ) {
+    return ctx.reply("Invalid command.");
   }
 
-  if (ctx.message?.text?.startsWith("testnet")) {
-    ctx.reply("Testnet faucet is not available yet.");
-    return;
+  const parts = ctx.message?.text?.split(" ");
+  if (parts.length < 2) {
+    return ctx.reply("Address parameter is missing.");
   }
 
-  return ctx.reply("Echo: " + ctx.message?.text);
+  const network = parts[0];
+  const address = parts[1];
+
+  const resp = await fetch(`https://faucet.${network}.sui.io/v1/gas`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      FixedAmountRequest: {
+        recipient: address,
+      },
+    }),
+  });
+
+  ctx.reply(await resp.json());
+  return;
 });
 
 bot.start();
