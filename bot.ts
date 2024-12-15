@@ -11,8 +11,8 @@ bot.command("start", (ctx) =>
 
 bot.on("message", async (ctx) => {
   if (
-    !ctx.message?.text?.startsWith("devnet") &&
-    !ctx.message?.text?.startsWith("testnet")
+    !ctx.message?.text?.startsWith("devnet ") &&
+    !ctx.message?.text?.startsWith("testnet ")
   ) {
     return ctx.reply("Invalid command.");
   }
