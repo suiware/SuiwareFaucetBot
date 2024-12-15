@@ -10,13 +10,15 @@ bot.command("start", (ctx) =>
 );
 
 bot.on("message", (ctx) => {
+  ctx.reply("Echo: " + ctx.message?.text)
+  
   if (ctx.message?.text?.startsWith("devnet")) {
-    ctx.reply("Dev mode is not available yet.");
+    ctx.reply("Devnet faucet is not available yet.");
     return;
   }
 
   if (ctx.message?.text?.startsWith("testnet")) {
-    ctx.reply("Test mode is not available yet.");
+    ctx.reply("Testnet faucet is not available yet.");
     return;
   }
 
