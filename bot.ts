@@ -16,21 +16,21 @@ bot.command("help", (ctx) =>
 
 bot.on("message", async (ctx) => {
   if (ctx.message?.text == null) {
-    return ctx.reply("Invalid command.");
+    return ctx.reply("Invalid command");
   }
 
   const command = ctx.message?.text.trim();
 
   if (!command.match(/^(devnet|testnet)/i)) {
-    return ctx.reply("Invalid command.");
+    return ctx.reply("Invalid command");
   }
 
   const parts = command.split(" ");
   if (parts.length === 1) {
-    return ctx.reply("Missing address.");
+    return ctx.reply("Missing address");
   }
   if (parts.length !== 2) {
-    return ctx.reply("Invalid command.");
+    return ctx.reply("Invalid command");
   }
 
   const network = parts[0].trim().toLowerCase();
