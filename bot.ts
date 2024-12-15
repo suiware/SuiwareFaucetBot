@@ -10,7 +10,7 @@ bot.command("start", (ctx) =>
 );
 bot.command("help", (ctx) =>
   ctx.reply(
-    "Type \"devnet [address]\" or \"testnet [address]\" to fund your address."
+    "Type \"devnet [address]\" or \"testnet [address]\" to get some test SUI."
   )
 );
 
