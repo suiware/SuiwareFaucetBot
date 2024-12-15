@@ -5,7 +5,7 @@ const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
 bot.command("start", (ctx) =>
   ctx.reply(
-    "Welcome to the Sui Faucet by Suiware!\n\n Type `devnet [address]` or `testnet [address]` to get some test SUI."
+    "Welcome to the Sui Faucet by Suiware!\n---\n\nUse **devnet [address]** or **testnet [address]** to fund your address."
   )
 );
 
