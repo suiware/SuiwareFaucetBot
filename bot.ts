@@ -22,8 +22,12 @@ bot.on("message", async (ctx) => {
     return ctx.reply("Address parameter is missing.");
   }
 
-  const network = parts[0];
-  const address = parts[1];
+  const network = parts[0].trim();
+
+  const address = parts[1].trim();
+  if (!address.match(/0[xX][a-fA-F0-9]{64}/)) {
+    return ctx.reply("Invalid address.");
+  }
 
   const resp = await fetch(`https://faucet.${network}.sui.io/v1/gas`, {
     method: "POST",
