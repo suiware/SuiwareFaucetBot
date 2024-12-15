@@ -15,8 +15,6 @@ bot.command("help", (ctx) =>
 );
 
 bot.on("message", async (ctx) => {
-  ctx.reply(ctx.message?.text || "");
-
   if (ctx.message?.text == null) {
     return ctx.reply("Invalid command");
   }
