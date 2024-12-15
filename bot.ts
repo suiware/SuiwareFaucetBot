@@ -37,7 +37,8 @@ bot.on("message", async (ctx) => {
     }),
   });
 
-  ctx.reply(await resp.json());
+  ctx.reply("Faucet request sent.");
+  ctx.reply(resp.statusText);
   return;
 });
 
