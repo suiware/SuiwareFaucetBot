@@ -10,22 +10,25 @@ bot.command("start", (ctx) =>
 );
 
 bot.on("message", async (ctx) => {
-  if (
-    !ctx.message?.text?.startsWith("devnet ") &&
-    !ctx.message?.text?.startsWith("testnet ")
-  ) {
+  if (ctx.message?.text == null) {
     return ctx.reply("Invalid command.");
   }
 
-  const parts = ctx.message?.text?.split(" ");
-  if (parts.length === 1) { 
+  const command = ctx.message?.text.trim();
+
+  if (!command.match(/^(devnet|testnet)/i)) {
+    return ctx.reply("Invalid command.");
+  }
+
+  const parts = command.split(" ");
+  if (parts.length === 1) {
     return ctx.reply("Missing address.");
   }
   if (parts.length !== 2) {
     return ctx.reply("Invalid command.");
   }
 
-  const network = parts[0].trim();
+  const network = parts[0].trim().toLowerCase();
 
   const address = parts[1].trim();
   if (!address.match(/0[xX][a-fA-F0-9]{64}/)) {
