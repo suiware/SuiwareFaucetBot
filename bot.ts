@@ -1,46 +1,35 @@
-import { Bot } from "https://deno.land/x/grammy@v1.33.0/mod.ts";
+import {
+  Bot,
+  CommandContext,
+  Context,
+} from "https://deno.land/x/grammy@v1.33.0/mod.ts";
 import "jsr:@std/dotenv/load";
+import { getFaucetUrl, validateAddress, validateNetwork } from "./utils.ts";
 
 const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
+const helpMessage =
+  'Type "/devnet 0x..." or "/testnet 0x..." to get some test SUI.';
+
 bot.command("start", (ctx) =>
-  ctx.reply(
-    "Welcome to the Sui Faucet by Suiware.io!\n\nType \"devnet [address]\" or \"testnet [address]\" to fund your address."
-  )
+  ctx.reply(`Welcome to Sui Faucet by Suiware.io!\n\n${helpMessage}`)
 );
-bot.command("help", (ctx) =>
-  ctx.reply(
-    "Type \"devnet [address]\" or \"testnet [address]\" to get some test SUI."
-  )
-);
+bot.command("help", (ctx) => ctx.reply(helpMessage));
 
-bot.on("message", async (ctx) => {
-  if (ctx.message?.text == null) {
+const handleFaucetRequest = async (
+  ctx: CommandContext<Context>,
+  network: string
+) => {
+  const address = ctx.match;
+  if (address == null) {
     return ctx.reply("Invalid command");
   }
 
-  const command = ctx.message?.text.trim();
-
-  if (!command.match(/^(devnet|testnet)/i)) {
-    return ctx.reply("Invalid command");
-  }
-
-  const parts = command.split(" ");
-  if (parts.length === 1) {
-    return ctx.reply("Missing address");
-  }
-  if (parts.length !== 2) {
-    return ctx.reply("Invalid command");
-  }
-
-  const network = parts[0].trim().toLowerCase();
-
-  const address = parts[1].trim();
-  if (!address.match(/0[xX][a-fA-F0-9]{64}/)) {
+  if (!validateAddress(address)) {
     return ctx.reply("Invalid address");
   }
 
-  const resp = await fetch(`https://faucet.${network}.sui.io/v1/gas`, {
+  const resp = await fetch(getFaucetUrl(network), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -52,7 +41,54 @@ bot.on("message", async (ctx) => {
     }),
   });
 
-  
+  return ctx.reply(resp.statusText);
+};
+
+bot.command("devnet", (ctx) => {
+  return handleFaucetRequest(ctx, "devnet");
+});
+
+bot.command("testnet", (ctx) => {
+  return handleFaucetRequest(ctx, "devnet");
+});
+
+bot.on("message", async (ctx) => {
+  if (ctx.message?.text == null) {
+    return ctx.reply("Invalid command");
+  }
+
+  const command = ctx.message?.text.trim();
+
+  const parts = command.split(" ");
+  if (parts.length === 1) {
+    return ctx.reply("Missing address");
+  }
+  if (parts.length !== 2) {
+    return ctx.reply("Invalid command");
+  }
+
+  const network = parts[0].trim().toLowerCase();
+  if (!validateNetwork(network)) {
+    return ctx.reply("Invalid command");
+  }
+
+  const address = parts[1].trim();
+  if (!validateAddress(address)) {
+    return ctx.reply("Invalid address");
+  }
+
+  const resp = await fetch(getFaucetUrl(network), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      FixedAmountRequest: {
+        recipient: address,
+      },
+    }),
+  });
+
   return ctx.reply(resp.statusText);
 });
 
