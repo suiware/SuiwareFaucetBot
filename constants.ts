@@ -1,8 +1,8 @@
 export const MENU = [
   { command: "start", description: "Intro" },
   { command: "help", description: "Help info" },
-  { command: "devnet", description: "Devnet faucet. Usage: /devnet 0x..." },
-  { command: "testnet", description: "Testnet faucet. Usage: /testnet 0x..." },
+  { command: "devnet 0x...", description: "Devnet faucet. Usage: /devnet 0x..." },
+  { command: "testnet 0x...", description: "Testnet faucet. Usage: /testnet 0x..." },
 ];
 
 export const WELCOME_MESSAGE = "Welcome to Sui Faucet by Suiware.io!";
