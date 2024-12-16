@@ -2,7 +2,7 @@ import {
   CommandContext,
   Context,
 } from "https://deno.land/x/grammy@v1.33.0/mod.ts";
-import { INVALID_COMMAND_MESSAGE } from "./constants.ts";
+import { ADDRESS_MISSING_MESSAGE } from "./constants.ts";
 
 export const getFaucetUrl = (network: string) => {
   return `https://faucet.${network}.sui.io/v1/gas`;
@@ -21,11 +21,13 @@ export const handleFaucetRequest = async (
 ) => {
   const address = ctx.match;
   if (address == null || address.trim() === "") {
-    return ctx.reply(INVALID_COMMAND_MESSAGE);
+    return ctx.reply(ADDRESS_MISSING_MESSAGE);
   }
 
   if (!validateAddress(address)) {
-    return ctx.reply("Invalid address");
+    return ctx.reply(
+      "Invalid SUI address. Should be in the format of 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+    );
   }
 
   const resp = await fetch(getFaucetUrl(network), {
