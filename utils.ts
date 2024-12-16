@@ -26,7 +26,7 @@ export const handleFaucetRequest = async (
 
   if (!validateAddress(address)) {
     return ctx.reply(
-      "Invalid SUI address. Should be in the format of 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+      "Invalid SUI address. Should be something like 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
     );
   }
 
