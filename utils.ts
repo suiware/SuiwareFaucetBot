@@ -20,7 +20,7 @@ export const handleFaucetRequest = async (
   network: string
 ) => {
   const address = ctx.match;
-  if (address == null) {
+  if (address == null || address.trim() === "") {
     return ctx.reply('Now enter your SUI address...');
     // return ctx.reply(INVALID_COMMAND_MESSAGE);
   }
