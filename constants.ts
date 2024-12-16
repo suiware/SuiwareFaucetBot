@@ -5,9 +5,9 @@ export const MENU = [
   // { command: "testnet", description: "Testnet faucet. Usage: /testnet 0x..." },
 ];
 
-export const WELCOME_MESSAGE = "Welcome to Sui Faucet Bot by [Suiware](https://suiware.io)!";
+export const WELCOME_MESSAGE = "Welcome to Sui Faucet Bot by Suiware.io!";
 
 export const HELP_MESSAGE =
-  "Type *\\/devnet 0x\\.\\.\\.* or *\\/testnet 0x\\.\\.\\.* to get some test SUI\\.";
+  "Type */devnet 0x...* or */testnet 0x...* to get some test SUI.";
 
-export const INVALID_COMMAND_MESSAGE = `Invalid command\\. ${HELP_MESSAGE}`;
+export const INVALID_COMMAND_MESSAGE = `Invalid command. ${HELP_MESSAGE}`;

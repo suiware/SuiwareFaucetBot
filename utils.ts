@@ -21,7 +21,7 @@ export const handleFaucetRequest = async (
 ) => {
   const address = ctx.match;
   if (address == null || address.trim() === "") {
-    return ctx.reply(INVALID_COMMAND_MESSAGE, { parse_mode: "MarkdownV2" });
+    return ctx.reply(INVALID_COMMAND_MESSAGE);
   }
 
   if (!validateAddress(address)) {
