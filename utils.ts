@@ -2,7 +2,7 @@ import {
   CommandContext,
   Context,
 } from "https://deno.land/x/grammy@v1.33.0/mod.ts";
-import { HELP_MESSAGE } from "./constants.ts";
+import { INVALID_COMMAND_MESSAGE } from "./constants.ts";
 
 export const getFaucetUrl = (network: string) => {
   return `https://faucet.${network}.sui.io/v1/gas`;
@@ -21,7 +21,8 @@ export const handleFaucetRequest = async (
 ) => {
   const address = ctx.match;
   if (address == null) {
-    return ctx.reply(`Invalid command. ${HELP_MESSAGE}`);
+    return ctx.reply('Now enter your SUI address...');
+    // return ctx.reply(INVALID_COMMAND_MESSAGE);
   }
 
   if (!validateAddress(address)) {
