@@ -7,7 +7,6 @@ export const MENU = [
 
 export const WELCOME_MESSAGE = "Welcome to Sui Faucet Bot by Suiware.io!";
 
-export const HELP_MESSAGE =
-  "Type */devnet 0x...* or */testnet 0x...* to get some test SUI.";
+export const HELP_MESSAGE = `Type "/devnet 0x..." or "/testnet 0x..." to get some test SUI.`;
 
 export const INVALID_COMMAND_MESSAGE = `Invalid command. ${HELP_MESSAGE}`;
