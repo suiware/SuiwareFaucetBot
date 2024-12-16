@@ -44,7 +44,7 @@ bot.on("message", (ctx) => {
     return ctx.reply(INVALID_COMMAND_MESSAGE, { parse_mode: "MarkdownV2" });
   }
 
-  return ctx.reply(`This format is deprecated. ${HELP_MESSAGE}`, {
+  return ctx.reply(`This format is deprecated\\. ${HELP_MESSAGE}`, {
     parse_mode: "MarkdownV2",
   });
 });
