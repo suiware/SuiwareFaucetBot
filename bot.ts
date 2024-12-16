@@ -11,9 +11,13 @@ import { handleFaucetRequest, validateNetwork } from "./utils.ts";
 const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
 bot.command("start", (ctx) =>
-  ctx.reply(`${WELCOME_MESSAGE}\n\n${HELP_MESSAGE}`)
+  ctx.reply(`${WELCOME_MESSAGE}\n\n${HELP_MESSAGE}`, {
+    parse_mode: "MarkdownV2",
+  })
 );
-bot.command("help", (ctx) => ctx.reply(HELP_MESSAGE));
+bot.command("help", (ctx) =>
+  ctx.reply(HELP_MESSAGE, { parse_mode: "MarkdownV2" })
+);
 
 bot.command("devnet", (ctx) => {
   return handleFaucetRequest(ctx, "devnet");
@@ -25,22 +29,24 @@ bot.command("testnet", (ctx) => {
 
 bot.on("message", (ctx) => {
   if (ctx.message?.text == null) {
-    return ctx.reply(INVALID_COMMAND_MESSAGE);
+    return ctx.reply(INVALID_COMMAND_MESSAGE, { parse_mode: "MarkdownV2" });
   }
 
   const command = ctx.message?.text.trim();
 
   const parts = command.split(" ");
   if (parts.length !== 2) {
-    return ctx.reply(INVALID_COMMAND_MESSAGE);
+    return ctx.reply(INVALID_COMMAND_MESSAGE, { parse_mode: "MarkdownV2" });
   }
 
   const network = parts[0].trim().toLowerCase();
   if (!validateNetwork(network)) {
-    return ctx.reply(INVALID_COMMAND_MESSAGE);
+    return ctx.reply(INVALID_COMMAND_MESSAGE, { parse_mode: "MarkdownV2" });
   }
 
-  return ctx.reply(`This format is deprecated. ${HELP_MESSAGE}`);
+  return ctx.reply(`This format is deprecated. ${HELP_MESSAGE}`, {
+    parse_mode: "MarkdownV2",
+  });
 });
 
 await bot.api.setMyCommands(MENU);
