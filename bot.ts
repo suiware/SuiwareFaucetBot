@@ -1,55 +1,26 @@
-import {
-  Bot,
-  CommandContext,
-  Context,
-} from "https://deno.land/x/grammy@v1.33.0/mod.ts";
+import { Bot } from "https://deno.land/x/grammy@v1.33.0/mod.ts";
 import "jsr:@std/dotenv/load";
-import { getFaucetUrl, validateAddress, validateNetwork } from "./utils.ts";
+import { HELP_MESSAGE, MENU } from "./constants.ts";
+import {
+  getFaucetUrl,
+  handleFaucetRequest,
+  validateAddress,
+  validateNetwork,
+} from "./utils.ts";
 
 const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
-const helpMessage =
-  'Type "/devnet 0x..." or "/testnet 0x..." to get some test SUI.';
-
 bot.command("start", (ctx) =>
-  ctx.reply(`Welcome to Sui Faucet by Suiware.io!\n\n${helpMessage}`)
+  ctx.reply(`Welcome to Sui Faucet by Suiware.io!\n\n${HELP_MESSAGE}`)
 );
-bot.command("help", (ctx) => ctx.reply(helpMessage));
-
-const handleFaucetRequest = async (
-  ctx: CommandContext<Context>,
-  network: string
-) => {
-  const address = ctx.match;
-  if (address == null) {
-    return ctx.reply("Invalid command");
-  }
-
-  if (!validateAddress(address)) {
-    return ctx.reply("Invalid address");
-  }
-
-  const resp = await fetch(getFaucetUrl(network), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      FixedAmountRequest: {
-        recipient: address,
-      },
-    }),
-  });
-
-  return ctx.reply(resp.statusText);
-};
+bot.command("help", (ctx) => ctx.reply(HELP_MESSAGE));
 
 bot.command("devnet", (ctx) => {
   return handleFaucetRequest(ctx, "devnet");
 });
 
 bot.command("testnet", (ctx) => {
-  return handleFaucetRequest(ctx, "devnet");
+  return handleFaucetRequest(ctx, "testnet");
 });
 
 bot.on("message", async (ctx) => {
@@ -72,6 +43,8 @@ bot.on("message", async (ctx) => {
     return ctx.reply("Invalid command");
   }
 
+  ctx.reply(`_This format is deprecated. ${HELP_MESSAGE}_`);
+
   const address = parts[1].trim();
   if (!validateAddress(address)) {
     return ctx.reply("Invalid address");
@@ -92,5 +65,6 @@ bot.on("message", async (ctx) => {
   return ctx.reply(resp.statusText);
 });
 
-// bot.start();
+await bot.api.setMyCommands(MENU);
+
 export default bot;
