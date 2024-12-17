@@ -1,4 +1,4 @@
-# SuiwareFaucetBot - Sui Faucet Telegram Bot (experimental)
+# SuiwareFaucetBot - Sui Faucet Telegram Bot
 
 An experiment with [Deno](https://deno.com/), [grammY](https://grammy.dev/) and the [official Sui faucet API](https://docs.sui.io/guides/developer/getting-started/get-coins#request-test-tokens-through-curl).
 
