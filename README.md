@@ -11,3 +11,9 @@ The easiest way is to configure Github actions to deploy to [Deno Deploy](https:
 ```bash
 curl https://api.telegram.org/bot[BOT_KEY]/setWebhook?url=[BOT_APP_URL]/[BOT_KEY]
 ```
+
+## Set environment variables
+
+```environment
+BOT_KEY="[your bot key]"
+```

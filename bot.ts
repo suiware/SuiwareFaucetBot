@@ -1,19 +1,17 @@
 import { Bot } from "https://deno.land/x/grammy@v1.33.0/mod.ts";
 import "jsr:@std/dotenv/load";
 import {
-  HELP_MESSAGE,
+  FULL_HELP_MESSAGE,
   INVALID_COMMAND_MESSAGE,
   MENU,
-  WELCOME_MESSAGE,
+  SHORT_HELP_MESSAGE,
 } from "./constants.ts";
 import { handleFaucetRequest, validateNetwork } from "./utils.ts";
 
 const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
-bot.command("start", (ctx) =>
-  ctx.reply(`${WELCOME_MESSAGE}\n\n${HELP_MESSAGE}`)
-);
-bot.command("help", (ctx) => ctx.reply(HELP_MESSAGE));
+bot.command("start", (ctx) => ctx.reply(FULL_HELP_MESSAGE));
+bot.command("help", (ctx) => ctx.reply(FULL_HELP_MESSAGE));
 
 bot.command("devnet", (ctx) => {
   return handleFaucetRequest(ctx, "devnet");
@@ -40,7 +38,7 @@ bot.on("message", (ctx) => {
     return ctx.reply(INVALID_COMMAND_MESSAGE);
   }
 
-  return ctx.reply(`This format is deprecated. ${HELP_MESSAGE}`);
+  return ctx.reply(`This format is deprecated. ${SHORT_HELP_MESSAGE}`);
 });
 
 await bot.api.setMyCommands(MENU);
