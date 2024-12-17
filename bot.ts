@@ -5,13 +5,16 @@ import {
   INVALID_COMMAND_MESSAGE,
   MENU,
   SHORT_HELP_MESSAGE,
+  SUPPORT_MESSAGE,
 } from "./constants.ts";
 import { handleFaucetRequest, validateNetwork } from "./utils.ts";
 
 const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
 bot.command("start", (ctx) => ctx.reply(FULL_HELP_MESSAGE));
-bot.command("help", (ctx) => ctx.reply(FULL_HELP_MESSAGE));
+bot.command("help", (ctx) =>
+  ctx.reply(`${SHORT_HELP_MESSAGE}\n\n${SUPPORT_MESSAGE}`)
+);
 
 bot.command("devnet", (ctx) => {
   return handleFaucetRequest(ctx, "devnet");
