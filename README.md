@@ -6,7 +6,7 @@ An experiment with [Deno](https://deno.com/), [grammY](https://grammy.dev/) and 
 
 The easiest way is to configure Github actions to deploy to [Deno Deploy](https://deno.com/deploy).
 
-## Register Telegram Web Hook
+## Register Telegram web hook
 
 ```bash
 curl https://api.telegram.org/bot[BOT_KEY]/setWebhook?url=[BOT_APP_URL]/[BOT_KEY]
