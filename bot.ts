@@ -12,8 +12,9 @@ import { handleFaucetRequest, validateNetwork } from "./utils.ts";
 const bot = new Bot(Deno.env.get("BOT_KEY") || "");
 
 bot.command("start", (ctx) => ctx.reply(FULL_HELP_MESSAGE));
-bot.command("help", (ctx) =>
-  ctx.reply(`${SHORT_HELP_MESSAGE}\n\n${SUPPORT_MESSAGE}`)
+bot.command(
+  "help",
+  (ctx) => ctx.reply(`${SHORT_HELP_MESSAGE}\n\n${SUPPORT_MESSAGE}`),
 );
 
 bot.command("devnet", (ctx) => {

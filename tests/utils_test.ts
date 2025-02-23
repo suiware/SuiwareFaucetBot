@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std/assert/assert_equals.ts";
 import { getFaucetUrl, validateAddress, validateNetwork } from "../utils.ts";
 
 Deno.test("getFaucetUrl returns correct URL", () => {

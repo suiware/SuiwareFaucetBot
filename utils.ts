@@ -15,9 +15,13 @@ export const validateNetwork = (network: string) => {
   return network.match(/^(devnet|testnet)$/i);
 };
 
+export const getTestnetFaucetLink = (address: string) => {
+  return `https://faucet.sui.io/?address=${address}`;
+};
+
 export const handleFaucetRequest = async (
   ctx: CommandContext<Context>,
-  network: string
+  network: string,
 ) => {
   const address = ctx.match;
   if (address == null || address.trim() === "") {
@@ -26,7 +30,16 @@ export const handleFaucetRequest = async (
 
   if (!validateAddress(address)) {
     return ctx.reply(
-      "Invalid SUI address. Should be something like 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+      "Invalid SUI address. Should be something like 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+    );
+  }
+
+  // For the testnet, open the faucet link in a new tab.
+  if (network === "testnet") {
+    return ctx.reply(
+      `For testnet tokens, please use the Web UI: ${
+        getTestnetFaucetLink(address)
+      }`,
     );
   }
 
